@@ -1,1 +1,1 @@
-create table bots(ip string, int port, uname string, pword string);
+create table bots(ip string, port int, uname string, pword string);
